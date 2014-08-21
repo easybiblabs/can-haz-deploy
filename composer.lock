@@ -1,0 +1,59 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "f6a60213452940459a5364f67fb6d8f8",
+    "packages": [
+        {
+            "name": "chobie/VersionSorter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chobie/VersionSorter.git",
+                "reference": "c141bfa7399012e01f711dcf8139a1959efa94ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chobie/VersionSorter/zipball/c141bfa7399012e01f711dcf8139a1959efa94ff",
+                "reference": "c141bfa7399012e01f711dcf8139a1959efa94ff",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "chobie": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shuhei Tanuma",
+                    "email": "chobieee@gmail.com"
+                }
+            ],
+            "description": "version sorter library for php5.3",
+            "homepage": "http://github.com/chobie/VersionSorter",
+            "keywords": [
+                "version"
+            ],
+            "time": "2011-12-23 04:23:59"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "beta",
+    "stability-flags": {
+        "chobie/versionsorter": 20
+    },
+    "prefer-stable": false,
+    "platform": [],
+    "platform-dev": []
+}

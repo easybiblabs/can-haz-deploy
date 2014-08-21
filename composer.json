@@ -1,0 +1,20 @@
+{
+    "name": "easybib/can-haz-deploy",
+    "description": "A dashboard to check if releases are clean and where they are deployed.",
+    "require": {
+        "chobie/VersionSorter": "dev-master"
+    },
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "till",
+            "email": "till@php.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ImagineEasy\\CanHazDeploy\\": "src/"
+        }
+    },
+    "minimum-stability": "beta"
+}
