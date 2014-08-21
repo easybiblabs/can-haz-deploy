@@ -1,0 +1,12 @@
+<?php
+return [
+    'travis' => [
+        'token' => '',
+    ],
+    'github' => [
+        'access_token' => '',
+        'organizations' => [
+            '',
+        ],
+    ],
+];
