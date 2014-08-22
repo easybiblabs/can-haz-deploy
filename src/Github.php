@@ -91,9 +91,9 @@ class Github
         $tickets = [];
         foreach ($ticketResponse as $ticket) {
             $tickets[] = [
+                'state' => $ticket['state'],
                 'title' => $ticket['title'],
                 'url' => $ticket['html_url'],
-                'state' => $ticket['state'],
             ];
         }
 
