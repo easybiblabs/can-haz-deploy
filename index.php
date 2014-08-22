@@ -29,6 +29,7 @@ $repositories = [];
 
 $http = new CanHazDeploy\Http;
 $github = new CanHazDeploy\Github($http, $config['github']);
+$travis = new CanHazDeploy\Travis($http, $config['github']['access_token']);
 
 foreach ($config['github']['organizations'] as $org) {
 
@@ -46,6 +47,10 @@ foreach ($config['github']['organizations'] as $org) {
         }
 
         if (true === $repository['has_issues']) {
+            continue;
+        }
+
+        if (false === $travis->isEnabled($repository['full_name'])) {
             continue;
         }
 
