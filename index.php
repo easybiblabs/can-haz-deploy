@@ -110,7 +110,9 @@ foreach ($config['github']['organizations'] as $org) {
                         <div id="<?=$dataTarget?>" class="panel-collapse collapse<?=$class?>">
                             <ul>
                                 <li><img src="<?=$badgeUrl?>" /></li>
+                            <?php if ('#' !== $releaseUrl): ?>
                                 <li><?=sprintf('<a href="%s" target="_blank">', $releaseUrl)?>Github release</a></li>
+                            <?php endif; ?>
                             <?php if (false !== $deployTicket): ?>
                                 <li><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
                             <?php endif; ?>
