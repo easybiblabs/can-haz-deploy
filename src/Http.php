@@ -3,13 +3,6 @@ namespace ImagineEasy\CanHazDeploy;
 
 class Http
 {
-    private $accessToken;
-
-    public function setAccessToken($token)
-    {
-        $this->accessToken = $token;
-    }
-
     /**
      * @param string $url
      * @param array  $context

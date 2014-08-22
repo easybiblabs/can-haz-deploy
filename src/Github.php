@@ -26,8 +26,6 @@ class Github
      */
     public function __construct(Http $http, array $config)
     {
-        $http->setAccessToken($config['access_token']);
-
         $this->http = $http;
         $this->config = $config;
 
