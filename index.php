@@ -23,6 +23,7 @@ if (!file_exists($autoloader)) {
 }
 require $autoloader;
 
+use Aws\OpsWorks\OpsWorksClient;
 use ImagineEasy\CanHazDeploy;
 
 $repositories = [];
@@ -30,11 +31,16 @@ $repositories = [];
 $http = new CanHazDeploy\Http;
 $github = new CanHazDeploy\Github($http, $config['github']);
 $travis = new CanHazDeploy\Travis($http, $config['github']['access_token']);
+$opsworks = new CanHazDeploy\OpsWorks(
+    OpsWorksClient::factory($config['opsworks']['config']),
+    $config['opsworks']['stacks']
+);
 
 foreach ($config['github']['organizations'] as $org) {
 
     $deployTickets = $github->getDeployTickets($org);
     $repositories = $github->getRepositories($org['name']);
+
 ?>
         <h1>Can haz deploy [<?=$org['name']?>]?</h1>
         <div class="row">
@@ -115,7 +121,11 @@ foreach ($config['github']['organizations'] as $org) {
                             <?php endif; ?>
                             <?php if (false !== $deployTicket): ?>
                                 <li><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
-                            <?php endif; ?>
+                            <?php endif;
+                            if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repository['name']))):
+                                echo '<li class="bg-success"><a class="btn btn-xs glyphicon glyphicon-ok" href="' . $app['url'] .'" target="_blank"> Currently deployed!</a>';
+                            endif;
+                            ?>
                             </ul>
                         </div>
                     </div>

@@ -7,7 +7,19 @@ return [
     'github' => [
         'access_token' => '',
         'organizations' => [
-            '',
+            'my-github-org',
+        ],
+    ],
+    'opsworks' => [
+        'config' => [
+            'key' => getenv('AWS_ACCESS_KEY_ID'),
+            'region' => 'us-east-1',
+            'secret' => getenv('AWS_SECRET_ACCESS_KEY'),
+        ],
+        'stacks' => [
+            'my-github-org' => [ // GitHub org
+                'blah-blub', // OpsWorks StackId
+            ],
         ],
     ],
     'travis' => [

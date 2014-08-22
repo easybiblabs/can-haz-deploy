@@ -2,6 +2,7 @@
     "name": "easybib/can-haz-deploy",
     "description": "A dashboard to check if releases are clean and where they are deployed.",
     "require": {
+        "aws/aws-sdk-php": "2.*",
         "chobie/VersionSorter": "dev-master"
     },
     "license": "BSD-2-Clause",
