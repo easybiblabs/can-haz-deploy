@@ -11,25 +11,19 @@ class Http
     }
 
     /**
-     * @param $url
+     * @param string $url
+     * @param array  $context
      *
      * @return array
      */
-    public function request($url)
+    public function requestGet($url, $context)
     {
-        $response = file_get_contents($url, false, $this->getContext());
+        $response = file_get_contents($url, false, $this->getContext($context));
         return json_decode($response, true);
     }
 
-    private function getContext()
+    private function getContext($context)
     {
-        return stream_context_create(
-            [
-                'http' => [
-                    'header' => 'User-Agent: can-haz-deploy' . "\n" . "Authorization: token {$this->accessToken}",
-                    'ignore_errors' => true
-                ],
-            ]
-        );
+        return stream_context_create($context);
     }
 }

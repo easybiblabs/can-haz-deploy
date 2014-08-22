@@ -13,6 +13,7 @@ if (!file_exists($configFile)) {
 $config = require $configFile;
 
 $config['travis']['badgeUrl'] = 'https://magnum.travis-ci.com/%s.svg?token=%s&branch=%s';
+$config['github']['issuesUrl'] = 'https://api.github.com/repos/%s/%s/issues?labels=deployment&state=all';
 $config['github']['repoUrl'] = 'https://api.github.com/orgs/%s/repos?per_page=100&type=all';
 $config['github']['releaseUrl'] = 'https://github.com/%s/releases/tag/%s';
 
@@ -31,9 +32,10 @@ $github = new CanHazDeploy\Github($http, $config['github']);
 
 foreach ($config['github']['organizations'] as $org) {
 
-    $repositories = $github->getRepositories($org);
+    $deployTickets = $github->getDeployTickets($org);
+    $repositories = $github->getRepositories($org['name']);
 ?>
-        <h1>Can haz deploy [<?=$org?>]?</h1>
+        <h1>Can haz deploy [<?=$org['name']?>]?</h1>
         <div class="row">
 
 <?php
@@ -47,13 +49,17 @@ foreach ($config['github']['organizations'] as $org) {
             continue;
         }
 
+        $dataGroup = sprintf('%s-accordion', $repository['name']);
+
 ?>
             <div class="col-md-2">
                 <h2><?=$repository['name']?></h2>
-                <ul class="list-group">
+
+                <div class="panel-group" id="<?=$dataGroup?>">
 <?php
         $branches = $github->getBranches($repository['tags_url']);
 
+        $branchCounter = 0;
         foreach ($branches as $actual) {
             $badgeUrl = sprintf(
                 $config['travis']['badgeUrl'],
