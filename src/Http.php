@@ -9,7 +9,7 @@ class Http
      *
      * @return array
      */
-    public function requestGet($url, $context)
+    public function request($url, $context)
     {
         $response = file_get_contents($url, false, $this->getContext($context));
         return json_decode($response, true);

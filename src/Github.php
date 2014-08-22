@@ -61,7 +61,7 @@ class Github
      */
     public function getBranches($tagsUrl)
     {
-        $tagsResponse = $this->http->requestGet($tagsUrl, $this->context);
+        $tagsResponse = $this->http->request($tagsUrl, $this->context);
 
         $branches = [];
 
@@ -80,7 +80,7 @@ class Github
     public function getDeployTickets(array $org)
     {
         $url = sprintf($this->config['issuesUrl'], $org['name'], $org['issues']);
-        $ticketResponse = $this->http->requestGet($url, $this->context);
+        $ticketResponse = $this->http->request($url, $this->context);
 
         $tickets = [];
         foreach ($ticketResponse as $ticket) {
@@ -102,6 +102,6 @@ class Github
     public function getRepositories($org)
     {
         $url = sprintf($this->config['repoUrl'], $org);
-        return $this->http->requestGet($url, $this->context);
+        return $this->http->request($url, $this->context);
     }
 }
