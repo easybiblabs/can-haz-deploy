@@ -1,3 +1,4 @@
 /composer.phar
 /etc/config.php
 /vendor
+/var/cache/*

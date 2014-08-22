@@ -22,11 +22,12 @@ if (!file_exists($autoloader)) {
 require $autoloader;
 
 use Aws\OpsWorks\OpsWorksClient;
+use Doctrine\Common\Cache;
 use ImagineEasy\CanHazDeploy;
 
 $repositories = [];
 
-$http = new CanHazDeploy\Http;
+$http = new CanHazDeploy\Http(new Cache\FilesystemCache(__DIR__ . '/var/cache'));
 $github = new CanHazDeploy\Github($http, $config['github']);
 $travis = new CanHazDeploy\Travis($http, $config['github']['access_token']);
 $opsworks = new CanHazDeploy\OpsWorks(

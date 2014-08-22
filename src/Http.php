@@ -1,8 +1,17 @@
 <?php
 namespace ImagineEasy\CanHazDeploy;
 
+use Doctrine\Common\Cache\Cache;
+
 class Http
 {
+    private $cache;
+
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
+
     /**
      * @param string $method
      * @param string $headers
@@ -41,12 +50,19 @@ class Http
      */
     public function request($url, $context)
     {
-        $response = file_get_contents($url, false, $this->getContext($context));
+        $cacheId = $this->createCacheId($url, $context);
+        if ($this->cache->contains($cacheId)) {
+            return $this->cache->fetch($cacheId);
+        }
+
+        $jsonResponse = file_get_contents($url, false, $this->getContext($context));
 
         $matches = array();
         preg_match('#HTTP/\d+\.\d+ (\d+)#', $http_response_header[0], $matches);
         if ($matches[1] < 400) {
-            return json_decode($response, true);
+            $response = json_decode($jsonResponse, true);
+            $this->cache->save($cacheId, $response, 200);
+            return $response;
         }
 
         switch ($matches[1]) {
@@ -57,6 +73,11 @@ class Http
                 $msg = "Error occurred: {$matches[1]}";
         }
         throw new \RuntimeException($msg, $matches[1]);
+    }
+
+    private function createCacheId($url, $context)
+    {
+        return md5($url . serialize($context));
     }
 
     private function getContext($context)

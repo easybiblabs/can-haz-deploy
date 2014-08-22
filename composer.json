@@ -3,7 +3,8 @@
     "description": "A dashboard to check if releases are clean and where they are deployed.",
     "require": {
         "aws/aws-sdk-php": "2.*",
-        "chobie/VersionSorter": "dev-master"
+        "chobie/VersionSorter": "dev-master",
+        "doctrine/cache": "@stable"
     },
     "license": "BSD-2-Clause",
     "authors": [
