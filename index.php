@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     </head>
     <body>
+    <div class="container-fluid">
 <?php
 $configFile = __DIR__ . '/etc/config.php';
 if (!file_exists($configFile)) {
@@ -142,5 +143,9 @@ foreach ($config['github']['organizations'] as $org) {
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+        &copy; 2014 &amp; beyond: <a href="https://twitter.com/klimpong">Till Klamp&auml;ckel</a> for Imagine Easy Solutions LLC
+        &mdash; <a href="https://github.com/easybiblabs/can-haz-deploy">Can Haz Deploy</a>
+    </div>
     </body>
 </html>
