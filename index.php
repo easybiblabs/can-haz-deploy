@@ -12,10 +12,8 @@ if (!file_exists($configFile)) {
 }
 $config = require $configFile;
 
-$config['travis']['badgeUrl'] = 'https://magnum.travis-ci.com/%s.svg?token=%s&branch=%s';
-$config['github']['issuesUrl'] = 'https://api.github.com/repos/%s/%s/issues?labels=deployment&state=all';
-$config['github']['repoUrl'] = 'https://api.github.com/orgs/%s/repos?per_page=100&type=all';
 $config['github']['releaseUrl'] = 'https://github.com/%s/releases/tag/%s';
+$config['travis']['badgeUrl'] = 'https://magnum.travis-ci.com/%s.svg?token=%s&branch=%s';
 
 $autoloader = __DIR__ . '/vendor/autoload.php';
 if (!file_exists($autoloader)) {

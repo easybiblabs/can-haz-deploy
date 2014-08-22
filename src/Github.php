@@ -20,6 +20,9 @@ class Github
      */
     private $http;
 
+    private $urlIssues = 'https://api.github.com/repos/%s/%s/issues?labels=deployment&state=all';
+    private $urlRepo = 'https://api.github.com/orgs/%s/repos?per_page=100&type=all';
+
     /**
      * @param Http  $http
      * @param array $config
@@ -82,7 +85,7 @@ class Github
      */
     public function getDeployTickets(array $org)
     {
-        $url = sprintf($this->config['issuesUrl'], $org['name'], $org['issues']);
+        $url = sprintf($this->urlIssues, $org['name'], $org['issues']);
         $ticketResponse = $this->http->request($url, $this->context);
 
         $tickets = [];
@@ -104,7 +107,7 @@ class Github
      */
     public function getRepositories($org)
     {
-        $url = sprintf($this->config['repoUrl'], $org);
+        $url = sprintf($this->urlRepo, $org);
         return $this->http->request($url, $this->context);
     }
 }
