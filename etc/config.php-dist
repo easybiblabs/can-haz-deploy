@@ -3,14 +3,14 @@ return [
     'display' => [
         'skip' => 6,
         'collapse' => 3,
-    ]
-    'travis' => [
-        'token' => '',
     ],
     'github' => [
         'access_token' => '',
         'organizations' => [
             '',
         ],
+    ],
+    'travis' => [
+        'token' => '',
     ],
 ];
