@@ -29,12 +29,16 @@ class Github
         $this->http = $http;
         $this->config = $config;
 
-        $this->context = [
-            'http' => [
-                'header' => 'User-Agent: can-haz-deploy' . "\r\n" . "Authorization: token {$this->config['access_token']}",
-                'ignore_errors' => true
-            ],
-        ];
+        $this->context = $this->http->buildContext(
+            'GET',
+            $http->buildHeaders(
+                [
+                    'User-Agent: can-haz-deploy',
+                    "Authorization: token {$this->config['access_token']}",
+                ]
+            ),
+            []
+        );
     }
 
     /**

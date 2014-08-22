@@ -4,6 +4,36 @@ namespace ImagineEasy\CanHazDeploy;
 class Http
 {
     /**
+     * @param string $method
+     * @param string $headers
+     * @param array  $options
+     *
+     * @return array
+     */
+    public function buildContext($method, $headers, array $options)
+    {
+        $allOptions = [
+            'http' => [
+                'header' => $headers,
+                'ignore_errors' => true,
+                'method' => $method,
+            ]
+        ];
+
+        return $allOptions;
+    }
+
+    /**
+     * @param array $headers
+     *
+     * @return string
+     */
+    public function buildHeaders(array $headers)
+    {
+        return implode("\r\n", $headers);
+    }
+
+    /**
      * @param string $url
      * @param array  $context
      *
