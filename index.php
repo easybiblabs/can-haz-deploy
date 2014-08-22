@@ -28,12 +28,14 @@ use ImagineEasy\CanHazDeploy;
 
 $repositories = [];
 
-$http = new CanHazDeploy\Http(new Cache\FilesystemCache(__DIR__ . '/var/cache'));
+$cache = new Cache\FilesystemCache(__DIR__ . '/var/cache');
+$http = new CanHazDeploy\Http($cache);
 $github = new CanHazDeploy\Github($http, $config['github']);
 $travis = new CanHazDeploy\Travis($http, $config['github']['access_token']);
 $opsworks = new CanHazDeploy\OpsWorks(
     OpsWorksClient::factory($config['opsworks']['config']),
-    $config['opsworks']['stacks']
+    $config['opsworks']['stacks'],
+    $cache
 );
 
 foreach ($config['github']['organizations'] as $org) {

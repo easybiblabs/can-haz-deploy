@@ -2,30 +2,48 @@
 namespace ImagineEasy\CanHazDeploy;
 
 use Aws\OpsWorks\OpsWorksClient;
+use Doctrine\Common\Cache\Cache;
 
 class OpsWorks
 {
+    /**
+     * @var Cache
+     */
+    private $cache;
+
+    /**
+     * @var OpsWorksClient
+     */
     private $client;
 
-    public function __construct(OpsWorksClient $client, array $stacks)
+    /**
+     * @param OpsWorksClient $client
+     * @param array          $stacks
+     * @param Cache          $cache
+     */
+    public function __construct(OpsWorksClient $client, array $stacks, Cache $cache)
     {
         $this->client = $client;
         $this->stacks = $stacks;
+        $this->cache = $cache;
     }
 
     /**
-     * @param string $org
+     * @param string $org Github organization
      *
      * @return array
      */
     public function getApps($org)
     {
-        static $apps = [];
-        if (!empty($apps)) {
-            return $apps;
+        $apps = [];
+
+        $cacheId = sprintf('OpsWorksStack%s', $org);
+        if ($this->cache->contains($cacheId)) {
+            return $this->cache->fetch($cacheId);
         }
 
         foreach ($this->stacks[$org] as $stackId) {
+
             foreach ($this->client->getIterator('DescribeApps', ['StackId' => $stackId]) as $app) {
 
                 if (!isset($app['Domains'])) {
@@ -45,9 +63,18 @@ class OpsWorks
             }
         }
 
+        $this->cache->save($cacheId, $apps);
+
         return $apps;
     }
 
+    /**
+     * @param string $org Github organization
+     * @param string $tag The version
+     * @param string $app The name of the app
+     *
+     * @return bool
+     */
     public function getDeployed($org, $tag, $app)
     {
         $apps = $this->getApps($org);
