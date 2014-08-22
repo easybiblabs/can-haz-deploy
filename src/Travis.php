@@ -21,7 +21,7 @@ class Travis
 
         $context = $this->http->buildContext('GET', $this->getHeaders($this->accessToken));
 
-        $repoResponse = $this->http->request($url, $context);
+        $repoResponse = $this->http->request($url, $context, 86400);
         if (null !== $repoResponse['repo']['last_build_started_at']) {
             return true;
         }
@@ -46,7 +46,7 @@ class Travis
             ]
         ];
 
-        $tokenResponse = $this->http->request($url, $context);
+        $tokenResponse = $this->http->request($url, $context, 86400);
         return $tokenResponse['access_token'];
     }
 

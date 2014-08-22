@@ -108,6 +108,6 @@ class Github
     public function getRepositories($org)
     {
         $url = sprintf($this->urlRepo, $org);
-        return $this->http->request($url, $this->context);
+        return $this->http->request($url, $this->context, 86400);
     }
 }

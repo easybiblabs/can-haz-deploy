@@ -44,11 +44,12 @@ class Http
     /**
      * @param string $url
      * @param array  $context
+     * @param int    $ttl
      *
      * @return array
      * @throws \RuntimeException
      */
-    public function request($url, $context)
+    public function request($url, $context, $ttl = 300)
     {
         $cacheId = $this->createCacheId($url, $context);
         if ($this->cache->contains($cacheId)) {
@@ -61,7 +62,7 @@ class Http
         preg_match('#HTTP/\d+\.\d+ (\d+)#', $http_response_header[0], $matches);
         if ($matches[1] < 400) {
             $response = json_decode($jsonResponse, true);
-            $this->cache->save($cacheId, $response, 200);
+            $this->cache->save($cacheId, $response, $ttl);
             return $response;
         }
 
