@@ -120,12 +120,19 @@ foreach ($config['github']['organizations'] as $org) {
                                 <li><img src="<?=$badgeUrl?>" /></li>
                             <?php if ('#' !== $releaseUrl): ?>
                                 <li><?=sprintf('<a href="%s" target="_blank">', $releaseUrl)?>Github release</a></li>
-                            <?php endif; ?>
-                            <?php if (false !== $deployTicket): ?>
-                                <li><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
+                            <?php endif;
+                            if (false !== $deployTicket):
+                                $state = '<span class="glyphicon %s"></span> ';
+                                if ('closed' == $deployTicket['state']) {
+                                    $state = sprintf($state, 'glyphicon-ok');
+                                } else {
+                                    $state = sprintf($state, 'glyphicon-fire');
+                                }
+                            ?>
+                                <li><?=$state?><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
                             <?php endif;
                             if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repository['name']))):
-                                echo '<li class="bg-success"><a class="btn btn-xs glyphicon glyphicon-ok" href="' . $app['url'] .'" target="_blank"> Currently deployed!</a>';
+                                echo '<li class="bg-success"><span class="glyphicon glyphicon-ok"></span> <a class="btn btn-xs" href="' . $app['url'] .'" target="_blank">Currently deployed!</a>';
                             endif;
                             ?>
                             </ul>
