@@ -46,15 +46,23 @@ class Github
     /**
      * @param string $release
      * @param array  $tickets
+     * @param string $app
      *
      * @return array|false
      */
-    public function findDeployTicket($release, array $tickets)
+    public function findDeployTicket($release, array $tickets, $app)
     {
         foreach ($tickets as $ticket) {
-            if (false !== strpos($ticket['title'], $release)) {
-                return $ticket;
+            if (false === strpos($ticket['title'], $release)) {
+                continue;
             }
+
+            $labels = implode(',', $ticket['labels']);
+            if (false === strpos($labels, $app)) {
+                continue;
+            }
+
+            return $ticket;
         }
 
         return false;
@@ -90,7 +98,15 @@ class Github
 
         $tickets = [];
         foreach ($ticketResponse as $ticket) {
+
+            $labels = [];
+
+            foreach ($ticket['labels'] as $label) {
+                $labels[] = $label['name'];
+            }
+
             $tickets[] = [
+                'labels' => $labels,
                 'state' => $ticket['state'],
                 'title' => $ticket['title'],
                 'url' => $ticket['html_url'],

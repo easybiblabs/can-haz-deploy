@@ -78,7 +78,7 @@ foreach ($config['github']['organizations'] as $org) {
                 break;
             }
 
-            $deployTicket = $github->findDeployTicket($actual, $deployTickets);
+            $deployTicket = $github->findDeployTicket($actual, $deployTickets, $repository['name']);
             $dataTarget = sprintf('%s-%s', $repository['name'], str_replace('.', '', $actual));
 ?>
                     <div class="panel panel-default">
