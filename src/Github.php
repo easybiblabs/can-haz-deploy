@@ -36,8 +36,7 @@ class Github
                     'User-Agent: can-haz-deploy',
                     "Authorization: token {$this->config['access_token']}",
                 ]
-            ),
-            []
+            )
         );
     }
 

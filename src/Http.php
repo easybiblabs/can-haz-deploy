@@ -6,11 +6,10 @@ class Http
     /**
      * @param string $method
      * @param string $headers
-     * @param array  $options
      *
      * @return array
      */
-    public function buildContext($method, $headers, array $options)
+    public function buildContext($method, $headers)
     {
         $allOptions = [
             'http' => [
