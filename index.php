@@ -27,7 +27,7 @@ use ImagineEasy\CanHazDeploy;
 
 $repositories = [];
 
-$http = new CanHazDeploy\Http($config['github']['access_token']);
+$http = new CanHazDeploy\Http;
 $github = new CanHazDeploy\Github($http, $config['github']);
 
 foreach ($config['github']['organizations'] as $org) {

@@ -5,9 +5,9 @@ class Http
 {
     private $accessToken;
 
-    public function __construct($accessToken)
+    public function setAccessToken($token)
     {
-        $this->accessToken = $accessToken;
+        $this->accessToken = $token;
     }
 
     /**
