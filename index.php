@@ -72,19 +72,53 @@ foreach ($config['github']['organizations'] as $org) {
                 $releaseUrl = '#';
             }
 
-            echo '<li class="list-group-item">';
-            echo sprintf('<b><a href="%s" target="_blank">', $releaseUrl) . "{$actual}</a></b>: ";
-            echo '<img src="' . $badgeUrl . '" />';
-            echo '</li>';
+            /**
+             * @desc Collapse from the 3th release on!
+             */
+            $class = ' in';
+            if ($branchCounter > $config['display']['collapse']) {
+                $class = '';
+            }
+
+            /**
+             * @desc Skip older releases!
+             */
+            if ($branchCounter > $config['display']['skip']) {
+                break;
+            }
+
+            $deployTicket = $github->findDeployTicket($actual, $deployTickets);
+            $dataTarget = sprintf('%s-%s', $repository['name'], str_replace('.', '', $actual));
+?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#<?=$dataGroup?>" href="#<?=$dataTarget?>"><?=$actual?></a>
+                            </h4>
+                        </div>
+                        <div id="<?=$dataTarget?>" class="panel-collapse collapse<?=$class?>">
+                            <ul>
+                                <li><img src="<?=$badgeUrl?>" /></li>
+                                <li><?=sprintf('<a href="%s" target="_blank">', $releaseUrl)?>Github release</a></li>
+                            <?php if (false !== $deployTicket): ?>
+                                <li><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
+                            <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>
+<?php
+            $branchCounter++;
         }
 ?>
 
-                </ul>
+                </div>
             </div>
 <?php
     }
 }
 ?>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     </body>
 </html>
