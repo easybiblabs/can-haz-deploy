@@ -71,7 +71,7 @@ class Github
     /**
      * @param string $tagsUrl
      *
-     * @return array
+     * @return \Generator
      */
     public function getBranches($tagsUrl)
     {
@@ -83,7 +83,10 @@ class Github
             $branches[] = $tag['name'];
         }
 
-        return VersionSorter::rsort($branches);
+        $branches = VersionSorter::rsort($branches);
+        foreach ($branches as $branch) {
+            yield $branch;
+        }
     }
 
     /**
@@ -120,11 +123,21 @@ class Github
     /**
      * @param string $org
      *
-     * @return array
+     * @return \Generator
      */
     public function getRepositories($org)
     {
         $url = sprintf($this->urlRepo, $org);
-        return $this->http->request($url, $this->context, 86400);
+        foreach ($this->http->request($url, $this->context, 86400) as $repository) {
+            if (true == $repository['fork']) {
+                continue;
+            }
+
+            if (true === $repository['has_issues']) {
+                continue;
+            }
+
+            yield $repository;
+        }
     }
 }

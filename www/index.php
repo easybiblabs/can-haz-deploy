@@ -15,7 +15,6 @@ require dirname(__DIR__) . '/bootstrap.php';
 foreach ($config['github']['organizations'] as $org) {
 
     $deployTickets = $github->getDeployTickets($org);
-    $repositories = $github->getRepositories($org['name']);
 
 ?>
         <h1>Can haz deploy [<?=$org['name']?>]?</h1>
@@ -30,15 +29,7 @@ foreach ($config['github']['organizations'] as $org) {
 
     $presenter = new Presenter($config);
 
-    foreach ($repositories as $repository) {
-
-        if (true == $repository['fork']) {
-            continue;
-        }
-
-        if (true === $repository['has_issues']) {
-            continue;
-        }
+    foreach ($github->getRepositories($org['name']) as $repository) {
 
         if (false === $travis->isEnabled($repository['full_name'])) {
             continue;
@@ -57,10 +48,9 @@ foreach ($config['github']['organizations'] as $org) {
                 <div class="panel-group" id="<?=$dataGroup?>">
 <?php
         $tagsUrl = $repository['tags_url']. '?page=1&per_page=' . $config['display']['skip'];
-        $branches = $github->getBranches($tagsUrl);
 
         $branchCounter = 0;
-        foreach ($branches as $actual) {
+        foreach ($github->getBranches($tagsUrl) as $actual) {
 
             $presenter->setBranch($actual);
 
