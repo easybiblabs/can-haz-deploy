@@ -14,18 +14,33 @@ class Presenter
         $this->config = $config;
     }
 
+    /**
+     * @param string $branch
+     *
+     * @return self
+     */
     public function setBranch($branch)
     {
         $this->branch = $branch;
         return $this;
     }
 
+    /**
+     * @param string $name E.g. can-haz-deploy
+     *
+     * @return self
+     */
     public function setRepository($name)
     {
         $this->repository = $name;
         return $this;
     }
 
+    /**
+     * @param string $fullName E.g. easybiblabs/can-haz-deploy
+     *
+     * @return string
+     */
     public function getBadgeUrl($fullName)
     {
         return sprintf(
