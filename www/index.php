@@ -34,7 +34,8 @@ foreach ($config['github']['organizations'] as $org) {
             continue;
         }
 
-        $dataGroup = sprintf('%s-accordion', $repository['name']);
+        $repositoryName = $repository['name'];
+        $dataGroup = sprintf('%s-accordion', $repositoryName);
 
 ?>
             <div class="col-md-2">
@@ -78,8 +79,8 @@ foreach ($config['github']['organizations'] as $org) {
                 break;
             }
 
-            $deployTicket = $github->findDeployTicket($actual, $deployTickets, $repository['name']);
-            $dataTarget = sprintf('%s-%s', $repository['name'], str_replace('.', '', $actual));
+            $deployTicket = $github->findDeployTicket($actual, $deployTickets, $repositoryName);
+            $dataTarget = sprintf('%s-%s', $repositoryName, str_replace('.', '', $actual));
 ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -103,7 +104,7 @@ foreach ($config['github']['organizations'] as $org) {
                             ?>
                                 <li><?=$state?><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
                             <?php endif;
-                            if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repository['name']))):
+                            if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repositoryName))):
                                 echo '<li class="bg-success"><span class="glyphicon glyphicon-ok"></span> <a class="btn btn-xs" href="' . $app['url'] .'" target="_blank">Currently deployed!</a>';
                             endif;
                             ?>
