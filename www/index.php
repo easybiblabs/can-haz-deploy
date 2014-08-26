@@ -47,10 +47,12 @@ foreach ($config['github']['organizations'] as $org) {
 
                 <div class="panel-group" id="<?=$dataGroup?>">
 <?php
-        $tagsUrl = $repository['tags_url']. '?page=1&per_page=' . $config['display']['skip'];
+        $tagsUrl = $presenter->getReleasesUrl($repository['full_name']);
 
         $branchCounter = 0;
-        foreach ($github->getBranches($tagsUrl) as $actual) {
+        foreach ($github->getBranches($tagsUrl) as $tag) {
+
+            $actual = $tag['name'];
 
             $presenter->setBranch($actual);
 
@@ -79,6 +81,9 @@ foreach ($config['github']['organizations'] as $org) {
                         <div id="<?=$dataTarget?>" class="panel-collapse collapse<?=$class?>">
                             <ul>
                                 <li><img src="<?=$badgeUrl?>" /></li>
+                            <?php if (!empty($tag['published'])): ?>
+                                <li><?=$tag['published']?></li>
+                            <?php endif; ?>
                             <?php if ('#' !== $releaseUrl): ?>
                                 <li><?=sprintf('<a href="%s" target="_blank">', $releaseUrl)?>Github release</a></li>
                             <?php endif;

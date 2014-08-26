@@ -77,15 +77,29 @@ class Github
     {
         $tagsResponse = $this->http->request($tagsUrl, $this->context);
 
-        $branches = [];
+        foreach (
+            array_merge(
+                $tagsResponse,
+                [
+                    [
+                        'tag_name' => 'master',
+                        'published_at' => '',
+                    ]
+                ]
+            ) as $tag) {
 
-        foreach (array_merge($tagsResponse, [['name' => 'master']]) as $tag) {
-            $branches[] = $tag['name'];
-        }
+            if (array_key_exists('draft', $tag) && true === $tag['draft']) {
+                continue;
+            }
 
-        $branches = VersionSorter::rsort($branches);
-        foreach ($branches as $branch) {
-            yield $branch;
+            if (array_key_exists('prerelease', $tag) && true === $tag['prerelease']) {
+                continue;
+            }
+
+            yield [
+                'name' => $tag['tag_name'],
+                'published' => $tag['published_at'],
+            ];
         }
     }
 

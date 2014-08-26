@@ -5,6 +5,7 @@ if (!file_exists($configFile)) {
 }
 $config = require $configFile;
 
+$config['github']['releasesUrl'] = 'https://api.github.com/repos/%s/releases?page=1&per_page=%s';
 $config['github']['releaseUrl'] = 'https://github.com/%s/releases/tag/%s';
 $config['travis']['badgeUrl'] = 'https://magnum.travis-ci.com/%s.svg?token=%s&branch=%s';
 

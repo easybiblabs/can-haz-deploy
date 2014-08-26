@@ -72,6 +72,15 @@ class Presenter
         return $state;
     }
 
+    public function getReleasesUrl($fullName)
+    {
+        return sprintf(
+            $this->config['github']['releasesUrl'],
+            $fullName,
+            $this->config['display']['skip']
+        );
+    }
+
     public function getReleaseUrl($fullName)
     {
         $url = sprintf(
