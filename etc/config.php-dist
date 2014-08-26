@@ -7,7 +7,9 @@ return [
     'github' => [
         'access_token' => '',
         'organizations' => [
-            'my-github-org',
+            [
+                'name' => 'my-github-org', // name of the Github org
+                'issues' => 'issues', // central issue repo
         ],
         'release_label' => 'type:release',
     ],
