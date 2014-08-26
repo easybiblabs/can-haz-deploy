@@ -21,5 +21,10 @@
             "ImagineEasy\\CanHazDeploy\\": "src/"
         }
     },
-    "minimum-stability": "beta"
+    "minimum-stability": "beta",
+     "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
