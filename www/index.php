@@ -90,7 +90,10 @@ foreach ($config['github']['organizations'] as $org) {
                             endif;
 
                             if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repositoryName))) {
-                                echo '<li class="bg-success"><span class="glyphicon glyphicon-ok"></span> <a class="btn btn-xs" href="' . $app['url'] .'" target="_blank">Currently deployed!</a>';
+                                echo '<li class="bg-success">';
+                                echo '<span class="glyphicon glyphicon-ok"></span>';
+                                echo ' <a class="btn btn-xs" href="' . $app['url'] .'" target="_blank">Currently deployed!</a>';
+                                echo '</li>';
                             }
                             ?>
                             </ul>
