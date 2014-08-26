@@ -1,4 +1,6 @@
 <?php
+use ImagineEasy\CanHazDeploy\Presenter;
+
 require dirname(__DIR__) . '/bootstrap.php';
 ?>
 <!DOCTYPE html>
@@ -25,6 +27,9 @@ foreach ($config['github']['organizations'] as $org) {
             </div>
         <?php endif; ?>
 <?php
+
+    $presenter = new Presenter($config);
+
     foreach ($repositories as $repository) {
 
         if (true == $repository['fork']) {
@@ -40,11 +45,14 @@ foreach ($config['github']['organizations'] as $org) {
         }
 
         $repositoryName = $repository['name'];
-        $dataGroup = sprintf('%s-accordion', $repositoryName);
 
+        $dataGroup = $presenter
+            ->setRepository($repositoryName)
+            ->getDataGroup()
+        ;
 ?>
             <div class="col-md-2">
-                <h2><?=$repository['name']?></h2>
+                <h2><?=$repositoryName?></h2>
 
                 <div class="panel-group" id="<?=$dataGroup?>">
 <?php
@@ -52,22 +60,18 @@ foreach ($config['github']['organizations'] as $org) {
 
         $branchCounter = 0;
         foreach ($branches as $actual) {
-            $badgeUrl = sprintf(
-                $config['travis']['badgeUrl'],
-                $repository['full_name'],
-                $config['travis']['token'],
-                $actual
-            );
 
-            $releaseUrl = sprintf(
-                $config['github']['releaseUrl'],
-                $repository['full_name'],
-                $actual
-            );
-
-            if (false !== strpos($actual, 'master')) {
-                $releaseUrl = '#';
+            /**
+             * @desc Skip older releases!
+             */
+            if ($branchCounter > $config['display']['skip']) {
+                break;
             }
+
+            $presenter->setBranch($actual);
+
+            $badgeUrl = $presenter->getBadgeUrl($repository['full_name']);
+            $releaseUrl = $presenter->getReleaseUrl($repository['full_name']);
 
             /**
              * @desc Collapse from the 3th release on!
@@ -77,15 +81,8 @@ foreach ($config['github']['organizations'] as $org) {
                 $class = '';
             }
 
-            /**
-             * @desc Skip older releases!
-             */
-            if ($branchCounter > $config['display']['skip']) {
-                break;
-            }
-
             $deployTicket = $github->findDeployTicket($actual, $deployTickets, $repositoryName);
-            $dataTarget = sprintf('%s-%s', $repositoryName, str_replace('.', '', $actual));
+            $dataTarget = $presenter->getDataTarget();
 ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -100,12 +97,7 @@ foreach ($config['github']['organizations'] as $org) {
                                 <li><?=sprintf('<a href="%s" target="_blank">', $releaseUrl)?>Github release</a></li>
                             <?php endif;
                             if (false !== $deployTicket):
-                                $state = '<span class="glyphicon %s"></span> ';
-                                if ('closed' == $deployTicket['state']) {
-                                    $state = sprintf($state, 'glyphicon-ok');
-                                } else {
-                                    $state = sprintf($state, 'glyphicon-fire');
-                                }
+                                $state = $presenter->getDeployTicketState($deployTicket);
                             ?>
                                 <li><?=$state?><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
                             <?php endif;
