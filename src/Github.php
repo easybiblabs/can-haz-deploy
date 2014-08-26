@@ -77,16 +77,15 @@ class Github
     {
         $tagsResponse = $this->http->request($tagsUrl, $this->context);
 
-        foreach (
-            array_merge(
-                $tagsResponse,
+        foreach (array_merge(
+            $tagsResponse,
+            [
                 [
-                    [
-                        'tag_name' => 'master',
-                        'published_at' => '',
-                    ]
+                    'tag_name' => 'master',
+                    'published_at' => '',
                 ]
-            ) as $tag) {
+            ]
+        ) as $tag) {
 
             if (array_key_exists('draft', $tag) && true === $tag['draft']) {
                 continue;

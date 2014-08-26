@@ -9,6 +9,8 @@ class Presenter
 
     private $repository;
 
+    private $state = '<span class="glyphicon %s"></span> ';
+
     public function __construct(array $config)
     {
         $this->config = $config;
@@ -63,13 +65,11 @@ class Presenter
 
     public function getDeployTicketState(array $deployTicket)
     {
-        $state = '<span class="glyphicon %s"></span> ';
         if ('closed' == $deployTicket['state']) {
-            $state = sprintf($state, 'glyphicon-ok');
-        } else {
-            $state = sprintf($state, 'glyphicon-fire');
+            return sprintf($this->state, 'glyphicon-ok');
         }
-        return $state;
+
+        return sprintf($this->state, 'glyphicon-fire');
     }
 
     public function getReleasesUrl($fullName)
