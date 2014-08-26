@@ -56,17 +56,11 @@ foreach ($config['github']['organizations'] as $org) {
 
                 <div class="panel-group" id="<?=$dataGroup?>">
 <?php
-        $branches = $github->getBranches($repository['tags_url']);
+        $tagsUrl = $repository['tags_url']. '?page=1&per_page=' . $config['display']['skip'];
+        $branches = $github->getBranches($tagsUrl);
 
         $branchCounter = 0;
         foreach ($branches as $actual) {
-
-            /**
-             * @desc Skip older releases!
-             */
-            if ($branchCounter > $config['display']['skip']) {
-                break;
-            }
 
             $presenter->setBranch($actual);
 
