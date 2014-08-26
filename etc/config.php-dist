@@ -10,6 +10,7 @@ return [
             [
                 'name' => 'my-github-org', // name of the Github org
                 'issues' => 'issues', // central issue repo
+            ],
         ],
         'release_label' => 'type:release',
     ],
