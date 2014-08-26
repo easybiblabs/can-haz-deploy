@@ -19,6 +19,11 @@ foreach ($config['github']['organizations'] as $org) {
         <h1>Can haz deploy [<?=$org['name']?>]?</h1>
         <div class="row">
 
+        <?php if (empty($deployTickets)): ?>
+            <div class="alert alert-danger" role="alert">
+                <strong>Error</strong> Found no deploy tickets. Github or the cache is broken!
+            </div>
+        <?php endif; ?>
 <?php
     foreach ($repositories as $repository) {
 
