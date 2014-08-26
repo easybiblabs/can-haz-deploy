@@ -20,7 +20,7 @@ class Github
      */
     private $http;
 
-    private $urlIssues = 'https://api.github.com/repos/%s/%s/issues?labels=deployment&state=all';
+    private $urlIssues = 'https://api.github.com/repos/%s/%s/issues?labels=%s&state=all&sort=updated&per_page=100';
     private $urlRepo = 'https://api.github.com/orgs/%s/repos?per_page=100&type=all';
 
     /**
@@ -93,10 +93,11 @@ class Github
      */
     public function getDeployTickets(array $org)
     {
-        $url = sprintf($this->urlIssues, $org['name'], $org['issues']);
+        $url = sprintf($this->urlIssues, $org['name'], $org['issues'], $this->config['release_label']);
         $ticketResponse = $this->http->request($url, $this->context);
 
         $tickets = [];
+
         foreach ($ticketResponse as $ticket) {
 
             $labels = [];

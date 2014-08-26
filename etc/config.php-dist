@@ -9,6 +9,7 @@ return [
         'organizations' => [
             'my-github-org',
         ],
+        'release_label' => 'type:release',
     ],
     'opsworks' => [
         'config' => [
