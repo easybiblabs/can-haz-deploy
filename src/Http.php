@@ -66,12 +66,13 @@ class Http
             return $response;
         }
 
+        $msg = sprintf("URL: %s", $url);
         switch ($matches[1]) {
             case 401:
-                $msg = "Unauthorized for {$url}!";
+                $msg .= "Unauthorized for {$url}!";
                 break;
             default:
-                $msg = "Error occurred: {$matches[1]}";
+                $msg .= "Error occurred: {$matches[1]}";
         }
         throw new \RuntimeException($msg, $matches[1]);
     }
