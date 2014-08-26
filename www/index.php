@@ -69,6 +69,7 @@ foreach ($config['github']['organizations'] as $org) {
 
             $deployTicket = $github->findDeployTicket($actual, $deployTickets, $repositoryName);
             $dataTarget = $presenter->getDataTarget();
+            $app = $opsworks->getDeployed($org['name'], $actual, $repositoryName);
 ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -94,7 +95,7 @@ foreach ($config['github']['organizations'] as $org) {
                             <?php
                             endif;
 
-                            if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repositoryName))) {
+                            if (false !== $app) {
                                 echo '<li class="bg-success">';
                                 echo '<span class="glyphicon glyphicon-ok"></span>';
                                 echo ' <a class="btn btn-xs" href="' . $app['url'] .'" target="_blank">Currently deployed!</a>';
