@@ -1,8 +1,6 @@
 <?php
 namespace ImagineEasy\CanHazDeploy;
 
-use chobie\VersionSorter;
-
 class Github
 {
     /**

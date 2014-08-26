@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aa20e61417ccbf165768685076c60fe1",
+    "hash": "816d70fc2876c8d1cb7860db27197d55",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -73,46 +73,6 @@
                 "sdk"
             ],
             "time": "2014-08-14 20:49:47"
-        },
-        {
-            "name": "chobie/VersionSorter",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/chobie/VersionSorter.git",
-                "reference": "c141bfa7399012e01f711dcf8139a1959efa94ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/chobie/VersionSorter/zipball/c141bfa7399012e01f711dcf8139a1959efa94ff",
-                "reference": "c141bfa7399012e01f711dcf8139a1959efa94ff",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "chobie": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Shuhei Tanuma",
-                    "email": "chobieee@gmail.com"
-                }
-            ],
-            "description": "version sorter library for php5.3",
-            "homepage": "http://github.com/chobie/VersionSorter",
-            "keywords": [
-                "version"
-            ],
-            "time": "2011-12-23 04:23:59"
         },
         {
             "name": "doctrine/cache",
@@ -651,7 +611,6 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "chobie/versionsorter": 20,
         "doctrine/cache": 0
     },
     "prefer-stable": false,
