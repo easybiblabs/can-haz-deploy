@@ -71,7 +71,9 @@ foreach ($config['github']['organizations'] as $org) {
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#<?=$dataGroup?>" href="#<?=$dataTarget?>"><?=$actual?></a>
+                                <a data-toggle="collapse" data-parent="#<?=$dataGroup?>" href="#<?=$dataTarget?>">
+                                    <?=$actual?>
+                                </a>
                             </h4>
                         </div>
                         <div id="<?=$dataTarget?>" class="panel-collapse collapse<?=$class?>">
@@ -84,10 +86,12 @@ foreach ($config['github']['organizations'] as $org) {
                                 $state = $presenter->getDeployTicketState($deployTicket);
                             ?>
                                 <li><?=$state?><a href="<?=$deployTicket['url'];?>"><?=$deployTicket['title']?></a></li>
-                            <?php endif;
-                            if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repositoryName))):
-                                echo '<li class="bg-success"><span class="glyphicon glyphicon-ok"></span> <a class="btn btn-xs" href="' . $app['url'] .'" target="_blank">Currently deployed!</a>';
+                            <?php
                             endif;
+
+                            if (false !== ($app = $opsworks->getDeployed($org['name'], $actual, $repositoryName))) {
+                                echo '<li class="bg-success"><span class="glyphicon glyphicon-ok"></span> <a class="btn btn-xs" href="' . $app['url'] .'" target="_blank">Currently deployed!</a>';
+                            }
                             ?>
                             </ul>
                         </div>
